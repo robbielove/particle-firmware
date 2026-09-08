@@ -221,20 +221,6 @@ public:
         return SYSTEM_ERROR_NONE;
     }
 
-    int deinit() {
-        end();
-
-        os_thread_scheduling(false, nullptr);
-        auto mutex = mutex_;
-        mutex_ = nullptr;
-        os_thread_scheduling(true, nullptr);
-
-        if (mutex) {
-            os_mutex_recursive_destroy(mutex);
-        }
-        return SYSTEM_ERROR_NONE;
-    }
-
     int setSettings(const SpiConfig& config, const hal_spi_config_t* spiConfig = nullptr, bool force = false) {
         CHECK_TRUE(validateConfig(rtlSpiIndex_, config), SYSTEM_ERROR_INVALID_ARGUMENT);
         // Save config
